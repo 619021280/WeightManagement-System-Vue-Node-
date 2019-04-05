@@ -1,0 +1,12 @@
+#findBox{
+	position: absolute;
+	top: 70px;
+	left: 170px;
+}
+
+#findBox #findInput{
+	width: 250px;
+	height: 50px;
+	text-indent: 20px;
+	font-size: 20px;
+}

@@ -1,0 +1,22 @@
+.editBox .firstP{
+	margin-left: 20px;
+	margin-top: 20px;
+	font-size: 20px;
+}
+
+.editBox .secondP{
+	margin-left: 20px;
+	margin-top: 15px;
+	font-size: 20px;
+}
+
+.editBox label{
+	display: block;
+	margin-top: 5px;
+	margin-left: 18px;
+}
+
+.editBox label input{
+	height: 30px;
+	text-indent: 12px;
+}

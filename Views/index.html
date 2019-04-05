@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>主页</title>
+	<link rel="stylesheet" type="text/css" href="./public/css/index.css">
+	<link rel="stylesheet" type="text/css" href="./public/css/loginBox.css">
+	<link rel="stylesheet" type="text/css" href="./public/css/deleteBox.css">
+	<link rel="stylesheet" type="text/css" href="./public/css/findInput.css">
+	<link rel="stylesheet" type="text/css" href="./public/css/editBox.css">
+	<link rel="stylesheet" type="text/css" href="./public/css/sign.css">
+	<link rel="stylesheet" type="text/css" href="./public/css/operationRecord.css">
+	<script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="public/js/contrlLeftNav.js"></script>
+	<script type="text/javascript" src="public/js/contrlLogin.js"></script>
+	<script type="text/javascript" src="node_modules/vue/dist/vue.js"></script>
+	<script type="text/javascript" src="../node_modules/vue-resource/dist/vue-resource.js"></script>
+</head>
+<body>
+	<h1>体重管理系统</h1>
+	<div id="app">
+		<div id="hi">	
+			<span id="hiSpan"> {{ hello }} </span><a href="#"><span id="loginSpan"> {{ loginMessage }}</span></a>
+			<span id="petName"> {{ nicheng }} </span>
+			<!-- 注销登录 -->
+			<button id="deleteLogin" v-if='login' @click='exit'>注销登录</button>
+		</div>
+		<!-- 按条件查询 -->
+		<div id="findBox">
+			<input type="text" name="date" id="findInput" placeholder="此处应该有某些查询条件">
+			<input type="button" name="" value="查询" id="findButton">
+		</div>
+		<!-- 体重列表信息 -->
+		<div id="weightListDiv">
+			<table class="maintable">
+				<thead>
+					<tr>
+						<th>序号</th>
+						<th>编号</th>
+						<th>日期</th>
+						<th>体重(Kg)</th>
+						<th>修改日期</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for='(data,index) in weightdata'>
+						<td> {{ index+1 }} </td>
+						<td> {{ data.NO }} </td>
+						<td> {{ data.day }}</td>
+						<td> {{ data.weight }}</td>
+						<td> {{ data.updateday }}</td>
+						<td>
+							<a href="#" @click.prevent="contrlEdit(data.NO,data.weight,data.day)">编辑</a>
+							<a href="#" @click.prevent="contrlDelete(data.NO)" >删除</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- 删除体重弹出框 -->
+			<div class="deleteMask"></div>
+			<div class="deleteBox">
+				<div id="deleteTips">确认删除吗?删除后不可恢复!!!</div>
+				<div id="deleteButton">
+					<input type="button" name="" value="确认" id="comfirm"
+					@click="comfirmDelete">
+					<input type="button" name="" value="取消" id="cancle" @click="cancleDelete">
+				</div>
+			</div>
+			<!-- 编辑体重弹出框 -->
+			<div class="editMask"></div>
+			<div class="editBox">
+				<p class="firstP">编号: {{ editNo }} </p>
+				<label>修改体重:<input type="number" name="weight" :placeholder="editWeight" id="editInput" v-model='afterEdit'></label>
+				<p class="secondP">创建日期: {{ editDay }} </p>
+				<div id="editButton">
+					<input type="button" name="" value="保存" id="comfirm"
+					@click="comfirmEdit">
+					<input type="button" name="" value="取消" id="cancle" @click="cancleEdit">
+				</div>
+			</div>
+			<!-- 增加体重页面 -->
+			<div id="addWeightBox">
+				<div id="addWeightInput">
+					<label for="addWeightIput">增加体重:</label><input v-model="weightNumber" type="text" name="weight" id="addWeightIput" @keyup.enter='addWeight()'>
+					<div id="addWeightBut"><input type="button" value="提交" @click="addWeight()"></div>
+				</div>
+			</div>
+		</div>
+		<!-- 分页管理,暂时未做 -->
+		<div id="splitPage">
+			<ul>
+				<li><a href="#">1</a></li>
+				<li><a href="#">1</a></li>
+			</ul>
+		</div>
+		<!-- 操作记录 -->
+		<div id="operationRecord">
+			<p>2018-10-20 05:00:00  将体重为200记录时间为2018-10-20 05:00:00的记录删除</p>
+			<p>2018-10-20 05:00:00  将体重为200更改为500</p>
+			<p>2018-10-20 05:00:00  增加了体重200</p>
+			<p>2018-10-20 05:00:00  将体重为200记录时间为2018-10-20 05:00:00的记录删除</p>
+		</div>
+		<!-- 删除记录 -->
+		<div id="deleteHistory">
+			<table class="maintable">
+				<thead>
+					<tr>
+						<th>序号</th>
+						<th>编号</th>
+						<th>日期</th>
+						<th>体重(Kg)</th>
+						<th>删除日期</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for='(data,index) in weightdataDelete'>
+						<td> {{ index+1 }} </td>
+						<td> {{ data.NO }} </td>
+						<td> {{ data.day }}</td>
+						<td> {{ data.weight }}</td>
+						<td> {{ data.deleteday }}</td>
+						<td>
+							<a href="#">恢复</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<!-- 左侧导航栏信息 -->
+		<div id="cbl">
+			<ul>
+				<li id="first" class="first"><a id='weightList' href="#" @click='weightList()' :class="{'cur':leftNevId==1}">体重列表</a></li>
+				<li><a href="#" id='addWeight' @click="leftNevId=2" :class="{'cur':leftNevId==2}">增加体重</a></li>
+				<li><a href="#" id='editRecord' @click="leftNevId=3" :class="{'cur':leftNevId==3}">操作日志</a></li>
+				<li><a href="#" id='deleteRecord' @click='weightListDelete()' :class="{'cur':leftNevId==4}">删除记录</a></li>
+				<li><a href="#" id="myselfMessage" @click="leftNevId=5" :class="{'cur':leftNevId==5}">个人中心</a></li>
+				<li><a href="#" @click="leftNevId=6" :class="{'cur':leftNevId==6}">敬请期待</a></li>
+			</ul>
+		</div>
+		<!-- 登录注册弹出框 -->
+		<div class="loginMask"></div>
+
+		<div class="loginBox">
+			<div class="topBox">
+				<button id="loginBut">登录</button>
+				<button id="signBut">注册</button>
+				<a href="javascript:;" title="关闭" class="close">×</a>
+			</div>
+			<!-- 登录页面信息 -->
+			<div id="loginMainBox">
+				<div class="loginMain">
+					<label for="username" id="usernameLable"><span>账号</span></label>
+					<div id="usernameBox">
+						<input type="text" name="username" id="username">
+					</div>
+					<label for="password" id="passwordLable">密码</label>
+					<div id="passwordBox">
+						<input type="password" name="password" id="password">
+					</div>
+					<button  id="login" @click="post()">{{ loginvalue }}</button>
+					<h4 id="test"> {{ test }} </h4>
+				</div>
+			</div>
+			<!-- 注册页面信息 -->
+			<div id="signMainBox">
+				<div class="signMain">
+					<div class="signMinBox">
+						<div class="signDiv nichengDiv">
+							<label for="signNicheng"><span>注册昵称:</span></label>
+							<input type="text" name="nichen" id="signNicheng" class="sign" v-model="signNicheng">
+						</div>
+						<div class="signDiv">
+							<label for="signUsername"><span>注册账号:</span></label>
+							<input type="text" class="sign" name="signUsername" id="signUsername" v-model='signUsername'>
+						</div>
+						
+						<div class="signDiv">
+							<label for="signPassword"><span>注册密码:</span></label>
+							<input type="password" class="sign" name="signPassword" id="signPassword" v-model='signPassword'>
+						</div>
+						<div class="signDiv">
+							<label for="signMail"><span>注册邮箱:</span></label>
+							<input type="text" class="mailBox" name="signMail" id="signMail" v-model="mail">
+							<span>@qq.com</span>
+							<button @click='sendMail' id="sendMail">发送验证码</button>
+						</div>
+						<div class="signDiv signYzm">
+							<label for="yzm"><span>验证码:</span></label>
+							<input type="text" name="yzm" id="yzm" v-model='yzm'>
+							<span> {{ signTips }} </span>
+						</div>
+						
+						<div>
+							<button id="sign" @click='getSession'>注册</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="./public/js/vueSet.js"></script>
+</body>
+</html>
+
+
+
+
+
+

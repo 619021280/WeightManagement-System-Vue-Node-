@@ -1,0 +1,64 @@
+.signMain{
+	width: 660px;
+	height: 313px;
+	background-color: #ccc;
+	margin-top: 22px;
+	border-radius: 5px;
+}
+
+.signMain .sign{
+	width: 350px;
+	height: 30px;
+	border-radius: 5px;
+	text-indent: 15px;
+}
+
+.signDiv button{
+	width: 150px;
+	height: 40px;
+	background-color: white;
+	display: inline;
+}
+
+.signMinBox button:hover{
+	background-color: #ccc;
+}
+
+#yzm{
+	border-radius: 5px;
+	height: 30px;
+	width: 100px;
+	text-indent: 15px;
+}
+
+.signMinBox{
+	margin-left: 40px;
+}
+
+#sign{
+	width: 350px;
+	height: 40px;
+	background-color: #3f89ec;
+	margin-top: 20px;
+	border-radius: 5px;
+	margin-left: 120px;
+}
+
+.signDiv{
+	margin-top: 15px;
+}
+
+.nichengDiv{
+	padding-top: 20px;
+}
+
+.signYzm{
+	margin-left: 20px;
+}
+
+.mailBox{
+	width: 280px;
+	height: 30px;
+	border-radius: 5px;
+	text-indent: 15px;
+}

@@ -1,0 +1,138 @@
+.loginMask,.deleteMask,.editMask{
+	z-index:1;
+	position:absolute;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	background:#000;
+	opacity:0.5;
+	filter:alpha(opacity=50);
+	-moz-opacity:0.5;
+	display:none;
+}
+
+.loginBox{
+	z-index:9;
+	position:absolute;
+	top:50%;
+	left:50%;
+	width:660px;
+	height:360px;
+	margin:-180px 0 0 -330px;
+	border-radius:5px;
+	border:solid 2px #e4e4e4;
+	background-color:#fff;
+	display:none;
+	box-shadow:0 0 10px #666;
+	background:#fff;
+}
+
+.deleteBox,.editBox{
+	z-index:9;
+	position:absolute;
+	top:50%;
+	left:50%;
+	width:302px;
+	height:177px;
+	margin:-150px 0 0 -140px;
+	border-radius:5px;
+	border:solid 2px #e4e4e4;
+	background-color:#fff;
+	display:none;
+	box-shadow:0 0 10px #666;
+	background:#fff;
+}
+
+.topBox{
+	position:relative;
+	height:24px;
+}
+
+.topBox .close{
+	float:right;
+	color:red;
+	padding:5px;
+	margin:-2px -5px -5px;
+	font:bold 30px/30px simsun;
+	text-shadow:0 1px 0 #ddd
+}
+
+.topBox .close:hover{
+	color:#444;
+}
+
+.loginMain input{
+	text-indent: 10px;
+	width: 200px;
+	height: 20px;
+}
+
+#loginBut{
+	background-color: #ccc;
+	outline: none;
+	border:0;
+	width: 80px;
+	height: 48px;
+	font-size: 20px;
+}
+
+#signBut{
+	background-color: white;
+	outline: none;
+	border:0;
+	width: 80px;
+	height: 47px;
+	font-size: 20px;
+}
+
+#username,#password{
+	margin-top: 10px;
+	text-indent: 10px;
+	width: 360px;
+	height: 30px;
+	border-radius: 5px;
+}
+
+.loginMain{
+	width: 660px;
+	height: 313px;
+	background-color: #ccc;
+	margin-top: 22px;
+	border-radius: 5px;
+}
+
+#usernameBox,#passwordBox{
+	margin-left: 120px;
+}
+
+label{
+	font-size: 20px;
+}
+
+#usernameLable,#passwordLable{
+	margin-left: 120px;
+	margin-top: 20px;
+	display: block;
+}
+
+#login{
+	margin-top: 20px;
+	margin-left: 123px;
+	width: 360px;
+	height: 40px;
+	border-radius: 5px;
+	background-color: #28a745;
+}
+
+#signMainBox{
+	display: none;
+}
+
+h4{
+	color: red;
+	text-align: center;
+	display: inline-block;
+	margin-left: 210px;
+	margin-top: 20px;
+}
